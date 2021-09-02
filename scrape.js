@@ -9,7 +9,8 @@ axios.get(`${base}/talks`).then((res) => {
 
   $('.card').each((index, element) => {
     const title = $(element).children().eq(1).children('h3').text()
-    talks[index] = { title }
+    const link = base + $(element).attr('href')
+    talks[index] = { title, link }
   })
   console.log(talks)
 })
