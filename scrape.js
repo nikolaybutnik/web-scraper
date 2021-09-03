@@ -1,16 +1,31 @@
-const axios = require('axios')
-const cheerio = require('cheerio')
+import cheerio from 'cheerio'
+import axios from 'axios'
 
 const base = 'http://jamesqquick.com'
 
-axios.get(`${base}/talks`).then((res) => {
-  const talks = []
-  const $ = cheerio.load(res.data)
+const getArticleContent = async (link) => {
+  if (link !== "http://jamesqquick.com/talks/that's-my-jamstack-11-19") {
+    const { data } = await axios.get(link)
+    const $ = cheerio.load(data)
+    return $('.section').children().text()
+  } else return null
+}
 
-  $('.card').each((index, element) => {
-    const title = $(element).children().eq(1).children('h3').text()
-    const link = base + $(element).attr('href')
-    talks[index] = { title, link }
+axios
+  .get(`${base}/talks`)
+  .then(async (res) => {
+    const talks = []
+    const $ = cheerio.load(res.data)
+
+    $('.card').each(async (index, element) => {
+      const title = $(element).children().eq(1).children('h3').text()
+      const link = base + $(element).attr('href')
+      const articleContent = await getArticleContent(link)
+      const newItem = { title, link, articleContent }
+      // console.log(newItem)
+      talks[index] = newItem
+    })
+
+    return talks
   })
-  console.log(talks)
-})
+  .then((data) => console.log(data))
