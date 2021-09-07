@@ -1,8 +1,11 @@
 const getDataBtn = document.getElementById('get-data-btn')
 const responseField = document.getElementById('response-field')
+const timerField = document.getElementById('timer-field')
 
-getDataBtn.addEventListener('click', () => {
-  fetch('/data')
+getDataBtn.addEventListener('click', async () => {
+  const timerStart = performance.now()
+  timerField.textContent = 'Fetching data...'
+  await fetch('/data')
     .then((res) => res.json())
     .then((data) => {
       console.log(data.data)
@@ -24,4 +27,10 @@ getDataBtn.addEventListener('click', () => {
         responseField.appendChild(card)
       })
     })
+  const timerEnd = performance.now()
+  timerField.textContent = `The operation took ${(
+    (timerEnd - timerStart) /
+    1000
+  ).toFixed(1)} seconds to complete`
+  console.log(timerEnd - timerStart)
 })
