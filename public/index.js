@@ -1,8 +1,10 @@
 const getDataBtn = document.getElementById('get-data-btn')
 const responseField = document.getElementById('response-field')
 const timerField = document.getElementById('timer-field')
+const urlInputForm = document.getElementById('url-input-form')
 
 getDataBtn.addEventListener('click', async () => {
+  responseField.textContent = ''
   const timerStart = performance.now()
   timerField.textContent = 'Fetching data...'
   await fetch('/data')
@@ -33,4 +35,10 @@ getDataBtn.addEventListener('click', async () => {
     1000
   ).toFixed(1)} seconds to complete`
   console.log(timerEnd - timerStart)
+})
+
+urlInputForm.addEventListener('submit', (e) => {
+  e.preventDefault()
+  const userInputUrl = document.getElementsByName('url')[0].value
+  responseField.textContent = `Form submitted successfully with the following use input: ${userInputUrl}`
 })
