@@ -39,6 +39,17 @@ app.get('/data', async (req, res) => {
   res.send({ data: data })
 })
 
+app.get('/data/:url', async (req, res) => {
+  const data = await axios.get(`https://${req.params.url}`).then((res) => {
+    const $ = cheerio.load(res.data)
+    $('noscript').remove()
+    $('script').remove()
+    return $('body').html()
+  })
+  console.log(data)
+  res.send({ data: data })
+})
+
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`)
 })

@@ -40,5 +40,9 @@ getDataBtn.addEventListener('click', async () => {
 urlInputForm.addEventListener('submit', (e) => {
   e.preventDefault()
   const userInputUrl = document.getElementsByName('url')[0].value
-  responseField.textContent = `Form submitted successfully with the following use input: ${userInputUrl}`
+  fetch(`data/${userInputUrl}`)
+    .then((res) => res.json())
+    .then((data) => {
+      responseField.innerHTML = data.data
+    })
 })
