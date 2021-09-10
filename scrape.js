@@ -46,7 +46,6 @@ app.get('/data/:url', async (req, res) => {
     $('script').remove()
     return $('body').html()
   })
-  console.log(data)
   res.send({ data: data })
 })
 

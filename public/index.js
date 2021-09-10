@@ -40,9 +40,27 @@ getDataBtn.addEventListener('click', async () => {
 urlInputForm.addEventListener('submit', (e) => {
   e.preventDefault()
   const userInputUrl = document.getElementsByName('url')[0].value
+  const options = {
+    indent: 'auto',
+    'indent-spaces': 2,
+    wrap: 80,
+    markup: true,
+    'output-xml': false,
+    'numeric-entities': true,
+    'quote-marks': true,
+    'quote-nbsp': false,
+    'show-body-only': true,
+    'quote-ampersand': false,
+    'break-before-br': true,
+    'uppercase-tags': false,
+    'uppercase-attributes': false,
+    'drop-font-tags': true,
+    'tidy-mark': false,
+  }
   fetch(`data/${userInputUrl}`)
     .then((res) => res.json())
     .then((data) => {
-      responseField.innerHTML = data.data
+      console.log(tidy_html5(data.data, options))
+      responseField.innerText = tidy_html5(data.data, options)
     })
 })
