@@ -60,7 +60,19 @@ urlInputForm.addEventListener('submit', (e) => {
   fetch(`data/${userInputUrl}`)
     .then((res) => res.json())
     .then((data) => {
-      console.log(tidy_html5(data.data, options))
-      responseField.innerText = tidy_html5(data.data, options)
+      const returnedData = tidy_html5(data.data, options)
+      // Data is first inserted into <pre></pre> tag to format it before processing
+      responseField.innerText = returnedData
+      const boldedArr = []
+      responseField.innerHTML.split('<br>').map((el, index) => {
+        let separatedText = el.split(' ')
+        separatedText.map((word, index) => {
+          if (word.trim().startsWith('&lt;')) {
+            separatedText[index] = `<strong>${word}</strong>`
+          } else separatedText[index] = word
+        })
+        boldedArr[index] = separatedText.join(' ')
+      })
+      responseField.innerHTML = boldedArr.join('<br>')
     })
 })
