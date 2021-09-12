@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "nodemon": "npx nodemon ./scrape.js"
+    "dev": "npx nodemon ./scrape.js"
   },
   "repository": {
     "type": "git",

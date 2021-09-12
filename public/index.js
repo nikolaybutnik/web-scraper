@@ -64,10 +64,11 @@ urlInputForm.addEventListener('submit', (e) => {
       // Data is first inserted into <pre></pre> tag to format it before processing
       responseField.innerText = returnedData
       const boldedArr = []
+      // Consider redoing the logic with regex
       responseField.innerHTML.split('<br>').map((el, index) => {
         let separatedText = el.split(' ')
         separatedText.map((word, index) => {
-          if (word.trim().startsWith('&lt;')) {
+          if (word.trim().startsWith('&lt;') || word.trim().endsWith('&gt;')) {
             separatedText[index] = `<strong>${word}</strong>`
           } else separatedText[index] = word
         })
