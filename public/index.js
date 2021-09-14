@@ -62,18 +62,16 @@ urlInputForm.addEventListener('submit', (e) => {
     .then((data) => {
       const returnedData = tidy_html5(data.data, options)
       // Data is first inserted into <pre></pre> tag to format it before processing
+      console.log(returnedData)
       responseField.innerText = returnedData
-      const boldedArr = []
-      // Consider redoing the logic with regex
-      responseField.innerHTML.split('<br>').map((el, index) => {
-        let separatedText = el.split(' ')
-        separatedText.map((word, index) => {
-          if (word.trim().startsWith('&lt;') || word.trim().endsWith('&gt;')) {
-            separatedText[index] = `<strong>${word}</strong>`
-          } else separatedText[index] = word
-        })
-        boldedArr[index] = separatedText.join(' ')
-      })
-      responseField.innerHTML = boldedArr.join('<br>')
+      // Highlight HTML tags
+      const pattern1 = /&lt;(?!!)\w*\/?\w*(&gt;)?/gi
+      const pattern2 = /(?<=")&gt;/gi
+      const pattern3 = /\/&gt;/gi
+      const result = responseField.innerHTML
+        .replace(pattern1, '<strong>$&</strong>')
+        .replace(pattern2, '<strong>$&</strong>')
+        .replace(pattern3, '<strong>$&</strong>')
+      responseField.innerHTML = result
     })
 })
