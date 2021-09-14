@@ -3,6 +3,12 @@ const responseField = document.getElementById('response-field')
 const timerField = document.getElementById('timer-field')
 const urlInputForm = document.getElementById('url-input-form')
 
+const htmlTagPatterns = [
+  /&lt;(?!!)\w*\/?\w*(&gt;)?/gi,
+  /(?<=")&gt;/gi,
+  /\/&gt;/gi,
+]
+
 getDataBtn.addEventListener('click', async () => {
   responseField.textContent = ''
   const timerStart = performance.now()
@@ -65,13 +71,11 @@ urlInputForm.addEventListener('submit', (e) => {
       console.log(returnedData)
       responseField.innerText = returnedData
       // Highlight HTML tags
-      const pattern1 = /&lt;(?!!)\w*\/?\w*(&gt;)?/gi
-      const pattern2 = /(?<=")&gt;/gi
-      const pattern3 = /\/&gt;/gi
-      const result = responseField.innerHTML
-        .replace(pattern1, '<strong>$&</strong>')
-        .replace(pattern2, '<strong>$&</strong>')
-        .replace(pattern3, '<strong>$&</strong>')
-      responseField.innerHTML = result
+      htmlTagPatterns.map((pattern) => {
+        responseField.innerHTML = responseField.innerHTML.replace(
+          pattern,
+          '<span class="html-tag">$&</span>'
+        )
+      })
     })
 })
