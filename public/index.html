@@ -1,28 +1,36 @@
 <!DOCTYPE html>
-<br lang="en">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web Scraper</title>
   </head>
-  <div id="timer-field"></div>
-  <hr></hr>
-  <button id="get-data-btn">Fetch Test Data</button>
-  <hr></hr>
-  <form id="url-input-form">
-    <label for="url">Input URL: https://</label>
-    <input name="url" />
-    <button type="submit">Submit</button>
-  </form>
-  <hr></hr>
-  <pre id="response-field"></pre>
+
+  <body>
+    <div id="timer-field"></div>
+    <hr></hr>
+    <button id="get-data-btn">Fetch Test Data</button>
+    <hr></hr>
+    <form id="url-input-form">
+      <label for="url">Input URL: https://</label>
+      <input name="url" />
+      <button type="submit">Submit</button>
+    </form>
+    <hr></hr>
+    <pre id="response-field"></pre>
+
     <script src='http://lovasoa.github.io/tidy-html5/tidy.js'></script>
     <script src="./index.js"></script>
+
     <style>
       .html-tag {
         font-weight: bold;
         color: red;
+      }
+      .class-name {
+        font-weight: bold;
+        color: blueviolet;
       }
     </style>
   </body>
