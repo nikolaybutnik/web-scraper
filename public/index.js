@@ -3,12 +3,6 @@ const responseField = document.getElementById('response-field')
 const timerField = document.getElementById('timer-field')
 const urlInputForm = document.getElementById('url-input-form')
 
-const htmlTagPatterns = [
-  /&lt;(?!!)\w*\/?\w*(&gt;)?/gi,
-  /(?<=")&gt;/gi,
-  /\/&gt;/gi,
-]
-
 getDataBtn.addEventListener('click', async () => {
   responseField.textContent = ''
   const timerStart = performance.now()
@@ -67,8 +61,7 @@ urlInputForm.addEventListener('submit', (e) => {
     .then((res) => res.json())
     .then((data) => {
       const returnedData = tidy_html5(data.data, options)
-      // Data is first inserted into <pre></pre> tag to format it before processing
-      console.log(returnedData)
+      // Data is first inserted into page to format it before processing
       responseField.innerText = returnedData
 
       const htmlTagPattern1 = /&lt;(?!!)\w*\/?\w*(&gt;)?/gi
@@ -78,10 +71,15 @@ urlInputForm.addEventListener('submit', (e) => {
       const classPattern =
         /(?!class="custom-html-tag")class=(["'])(?:(?=(\\?))\2.)*?\1/gi
 
+      const idPattern = /id=(["'])(?:(?=(\\?))\2.)*?\1/gi
+
+      console.log(responseField.innerText)
+
       responseField.innerHTML = responseField.innerHTML
         .replace(htmlTagPattern1, '<span class="custom-html-tag">$&</span>')
         .replace(htmlTagPattern2, '<span class="custom-html-tag">$&</span>')
         .replace(htmlTagPattern3, '<span class="custom-html-tag">$&</span>')
         .replace(classPattern, '<span class="custom-class-name">$&</span>')
+        .replace(idPattern, '<span class="custom-id-name">$&</span>')
     })
 })
