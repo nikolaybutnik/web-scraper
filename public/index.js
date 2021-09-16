@@ -70,12 +70,18 @@ urlInputForm.addEventListener('submit', (e) => {
       // Data is first inserted into <pre></pre> tag to format it before processing
       console.log(returnedData)
       responseField.innerText = returnedData
-      // Highlight HTML tags
-      htmlTagPatterns.map((pattern) => {
-        responseField.innerHTML = responseField.innerHTML.replace(
-          pattern,
-          '<span class="html-tag">$&</span>'
-        )
-      })
+
+      const htmlTagPattern1 = /&lt;(?!!)\w*\/?\w*(&gt;)?/gi
+      const htmlTagPattern2 = /(?<=")&gt;/gi
+      const htmlTagPattern3 = /\/&gt;/gi
+
+      const classPattern =
+        /(?!class="custom-html-tag")class=(["'])(?:(?=(\\?))\2.)*?\1/gi
+
+      responseField.innerHTML = responseField.innerHTML
+        .replace(htmlTagPattern1, '<span class="custom-html-tag">$&</span>')
+        .replace(htmlTagPattern2, '<span class="custom-html-tag">$&</span>')
+        .replace(htmlTagPattern3, '<span class="custom-html-tag">$&</span>')
+        .replace(classPattern, '<span class="custom-class-name">$&</span>')
     })
 })
