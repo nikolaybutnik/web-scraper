@@ -18,12 +18,15 @@
       <button type="submit">Submit</button>
     </form>
     <hr></hr>
-    <pre id="response-field"></pre>
+    <div id="response-field"></div>
 
     <script src='http://lovasoa.github.io/tidy-html5/tidy.js'></script>
     <script src="./index.js"></script>
 
     <style>
+      #response-field {
+        overflow-wrap: break-word;
+      }
       .custom-html-tag {
         font-weight: bold;
         color: red;

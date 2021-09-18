@@ -60,9 +60,9 @@ urlInputForm.addEventListener('submit', (e) => {
   fetch(`data/${userInputUrl}`)
     .then((res) => res.json())
     .then((data) => {
-      const returnedData = tidy_html5(data.data, options)
+      // const returnedData = tidy_html5(data.data, options)
       // Data is first inserted into page to format it before processing
-      responseField.innerText = returnedData
+      responseField.innerText = data.data
 
       const htmlTagPattern1 = /&lt;(?!!)\w*\/?\w*(&gt;)?/gi
       const htmlTagPattern2 = /(?<=")&gt;/gi
@@ -72,8 +72,6 @@ urlInputForm.addEventListener('submit', (e) => {
         /(?!class="custom-html-tag")class=(["'])(?:(?=(\\?))\2.)*?\1/gi
 
       const idPattern = /id=(["'])(?:(?=(\\?))\2.)*?\1/gi
-
-      console.log(responseField.innerText)
 
       responseField.innerHTML = responseField.innerHTML
         .replace(htmlTagPattern1, '<span class="custom-html-tag">$&</span>')
