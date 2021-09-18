@@ -2,6 +2,7 @@ import cheerio from 'cheerio'
 import axios from 'axios'
 import express from 'express'
 import path from 'path'
+import { minify } from 'html-minifier'
 
 const __dirname = path.resolve()
 const app = express()
@@ -44,9 +45,15 @@ app.get('/data/:url', async (req, res) => {
     const $ = cheerio.load(res.data)
     $('noscript').remove()
     $('script').remove()
+    $('br').remove()
     return $('body').html()
   })
-  res.send({ data: data })
+  res.send({
+    data: minify(data, {
+      collapseWhitespace: true,
+      removeComments: true,
+    }),
+  })
 })
 
 app.listen(PORT, () => {
