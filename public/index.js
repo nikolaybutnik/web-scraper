@@ -71,7 +71,7 @@ urlInputForm.addEventListener('submit', (e) => {
       const classPattern =
         /(?!class="custom-html-tag")class=(["'])(?:(?=(\\?))\2.)*?\1/gi
 
-      const idPattern = /id=(["'])(?:(?=(\\?))\2.)*?\1/gi
+      const idPattern = /(?<!data-)id=(["'])(?:(?=(\\?))\2.)*?\1/gi
 
       responseField.innerHTML = responseField.innerHTML
         .replace(htmlTagPattern1, '<span class="custom-html-tag">$&</span>')
@@ -81,3 +81,5 @@ urlInputForm.addEventListener('submit', (e) => {
         .replace(idPattern, '<span class="custom-id-name">$&</span>')
     })
 })
+
+// Instead of wraping the html elements in a div, consder inserting a class right into the tags???
