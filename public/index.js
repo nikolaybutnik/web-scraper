@@ -73,12 +73,15 @@ urlInputForm.addEventListener('submit', (e) => {
 
       const idPattern = /(?<!data-)id=(["'])(?:(?=(\\?))\2.)*?\1/gi
 
+      const hrefPattern = /href=(["'])(?:(?=(\\?))\2.)*?\1/gi
+
       responseField.innerHTML = responseField.innerHTML
         .replace(htmlTagPattern1, '<span class="custom-html-tag">$&</span>')
         .replace(htmlTagPattern2, '<span class="custom-html-tag">$&</span>')
         .replace(htmlTagPattern3, '<span class="custom-html-tag">$&</span>')
         .replace(classPattern, '<span class="custom-class-name">$&</span>')
         .replace(idPattern, '<span class="custom-id-name">$&</span>')
+        .replace(hrefPattern, '<span class="custom-href">$&</span>')
     })
 })
 
